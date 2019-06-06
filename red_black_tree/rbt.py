@@ -1,6 +1,5 @@
 from .node import Node, BLACK, RED, NIL 
 
-
 class RedBlackTree:
     # every node has null nodes as children initially, create one such object for easy management
     NIL_LEAF = Node(value=None, color=NIL, parent=None)
