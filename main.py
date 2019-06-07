@@ -12,11 +12,11 @@ try:
 except:
     print('Exception occurred')
 
-def comparation_graph(results,n):
+def comparation_graph(results_insert,n):
     plt.ylabel('Tempo para %d nós (em milisegundos)' % (n))
     
-    for key in results.keys():
-        plt.bar(key, results[key])
+    for key in results_insert.keys():
+        plt.bar(key, results_insert[key])
 
     plt.show()
 
@@ -32,47 +32,77 @@ def get_values(n):
     values = []
     for i in range(0,n*2,2):
         values.append(i)
-    random.shuffle(values)
-    print(values)
+    # print(values)
     return values
 
-results = {'RB': [], 'AVL': []}
-result = {'RB': 0, 'AVL': []}
-start = 0
+results_insert = {'RB': [], 'AVL': []}
+result_insert = {'RB': 0, 'AVL': 0}
+results_search = {'RB': [], 'AVL': []}
+result_search = {'RB': 0, 'AVL': 0}
+
 while(number):
-    print("Escolha uma das opções:\n1- Inserir valores randômicos para n nós.\n0- Para sair\n")
+    start = 0
+    end = 0
+    value = 0
+    values.clear
+    value_sought = 0
+    diff = 0
+    print("Escolha uma das opções:\n1- Comparativo inserção (insere valores randômicos para n nós)\n2- Comparativo de busca (busca valor randômico em valores para n nós) \n0- Para sair\n")
     number = int(input())
-    if number == 1:
+    if number == 1 or number == 2:
         print("Digite a quantidade de nós:")
         n = int(input())
         values = get_values(n)
-        for key in result.keys():
-            if key == 'AVL':
-                start = time.time()
-                avl = AVL_Tree()
-                root = None
-                for value in values:
-                    root = avl.insert(root, value)
+        if number == 1:
+            for key in result_insert.keys():
+                if key == 'AVL': 
+                    avl = AVL_Tree()
+                    root = None
+                    start = time.time()
+                    for value in values:
+                        root = avl.insert(root, value)
 
-            elif key == 'RBT':
-                start = time.time()
-                for value in values:
-                    rbt.add(value)
+                elif key == 'RB':
+                    start = time.time()
+                    for value in values:
+                        rbt.add(value)
+                    root = rbt.root
+                
+                end = time.time()
+                diff = float(end - start)
+                diff = diff * 1000
+                
+                result_insert[key] = diff
+                results_insert[key].append(diff)
             
-            end = time.time()
-            diff = float(end - start)
-            diff = diff * 1000
-            
-            result[key] = diff
-            results[key].append(diff)
+            comparation_graph(results_insert, n)
+        else:
+            for key in result_insert.keys():
+                if key == 'AVL':
+                    avl = AVL_Tree()
+                    root = None
+                    for value in values:
+                        root = avl.insert(root, value)                    
+                    value_sought = random.choice(values)
+                    start = time.time()
+                    avl.find_node(root, value_sought)
 
-        root = rbt.root
-        print('O tempo de inseção de %d nós foi de %f segundos ' % (n, diff))
-        for key in result.keys():
-            results[key].append(diff)
-            if key == 'RBT':
-                print_tree(root)
-        comparation_graph(results, n)
+                elif key == 'RB':
+                    for value in values:
+                        rbt.add(value)                    
+                    value_sought = random.choice(values)
+                    start = time.time()
+                    rbt.find_node(value_sought)
+
+                end = time.time()
+                diff = float(end - start)
+                diff = diff * 1000
+                
+                result_search[key] = diff
+                results_search[key].append(diff)
+
+            root = rbt.root
+            comparation_graph(results_search, n)
 
     print("Aperte enter para continuar!")
     input()

@@ -131,6 +131,28 @@ class AVL_Tree(object):
 
 		return self.getMinValueNode(root.left)
 
+	def find_node(self, root, value):
+		def inner_find(root):
+			if root is None:
+					return None
+			if value > root.val:
+					return inner_find(root.right)
+			elif value < root.val:
+					return inner_find(root.left)
+			else:
+					return root
+
+		found_node = inner_find(root)
+		return found_node
+	# def find_node(root, value):
+	# 	while root != None:
+	# 		if root.val == value:
+	# 			return
+	# 		elif root.val > value:
+	# 			root = root.right
+	# 		else:
+	# 			root = root.left
+
 	def preOrder(self, root):
 
 		if not root:
