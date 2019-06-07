@@ -32,7 +32,6 @@ def get_values(n):
     values = []
     for i in range(0,n*2,2):
         values.append(i)
-    # print(values)
     return values
 
 results_insert = {'RB': [], 'AVL': []}
@@ -47,6 +46,7 @@ while(number):
     values.clear
     value_sought = 0
     diff = 0
+    i = 0
     print("Escolha uma das opções:\n1- Comparativo inserção (insere valores randômicos para n nós)\n2- Comparativo de busca (busca valor randômico em valores para n nós) \n0- Para sair\n")
     number = int(input())
     if number == 1 or number == 2:
@@ -54,18 +54,25 @@ while(number):
         n = int(input())
         values = get_values(n)
         if number == 1:
+            print("Digite quantas iterações você deseja inserir para %d nós:" % n)
+            b = int(input())
+        else:
+            print("Digite quantas iterações você deseja buscar para %d nós:" % n)
+            b = int(input())
+        if number == 1:
             for key in result_insert.keys():
                 if key == 'AVL': 
                     avl = AVL_Tree()
                     root = None
                     start = time.time()
-                    for value in values:
-                        root = avl.insert(root, value)
-
+                    for i in range(0,b):
+                        for value in values:
+                            root = avl.insert(root, value)
                 elif key == 'RB':
                     start = time.time()
-                    for value in values:
-                        rbt.add(value)
+                    for i in range(0,b):
+                        for value in values:
+                            rbt.add(value)
                     root = rbt.root
                 
                 end = time.time()
@@ -85,14 +92,16 @@ while(number):
                         root = avl.insert(root, value)                    
                     value_sought = random.choice(values)
                     start = time.time()
-                    avl.find_node(root, value_sought)
+                    for i in range(0,b):
+                        avl.find_node(root, value_sought)
 
                 elif key == 'RB':
                     for value in values:
                         rbt.add(value)                    
                     value_sought = random.choice(values)
                     start = time.time()
-                    rbt.find_node(value_sought)
+                    for i in range(0,b):
+                        rbt.find_node(value_sought)
 
                 end = time.time()
                 diff = float(end - start)
