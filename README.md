@@ -6,8 +6,8 @@ Implementação da Árvore Vermelho e Preto (Red-Black Tree) e da Árvore AVL
 | Adailson Pinho dos Santos | 13/0140724 | [adailson2](https://github.com/adailson2) |  
 | Eliseu Egewarth | 12/0029693 | [eliseuegewarth](https://github.com/eliseuegewarth) |  
 ## Algoritmos implementados
-- [ ] Red-Black Tree
-- [ ] AVL Tree
+- [X] Red-Black Tree
+- [X] AVL Tree
 ## Estrutura do repositório
 - red_black_tree/  
 	Implementações do algoritmo da Árvore Vermelho e Preto
